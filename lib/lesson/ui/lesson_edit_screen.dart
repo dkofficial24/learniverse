@@ -52,7 +52,7 @@ class _LessonEditScreenState extends State<LessonEditScreen> {
     return copiedFile.path.toString();
   }
 
-  bool _isDesktop() => !kIsWeb && !Platform.isAndroid && !Platform.isIOS;
+  // bool _isDesktop() => !kIsWeb && !Platform.isAndroid && !Platform.isIOS;
 
   Future<String?> openFileSystemPickerForDesktop(BuildContext context) async {
     return await FilesystemPicker.open(
@@ -181,12 +181,13 @@ class _LessonEditScreenState extends State<LessonEditScreen> {
                         builder: (context) => LessonPreview(
                               lesson: Lesson(
                                 title: "",
-                                content: jsonEncode(_controller.document.toDelta().toJson()),
+                                content: jsonEncode(
+                                    _controller.document.toDelta().toJson()),
                                 description: "",
                                 durationInMinutes: 0,
                                 imageUrl: "",
                                 isCompleted: true,
-                                quizAnswers: [],quizDurationInMinutes: 1,quizQuestions: [],videoUrl: ""
+                                videoUrl: '',
                               ),
                             )),
                   );
@@ -198,4 +199,3 @@ class _LessonEditScreenState extends State<LessonEditScreen> {
     );
   }
 }
-
