@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
-import 'package:learniverse/core/responsive_widget.dart';
+import 'package:learniverse/core/editor/responsive_widget.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'fake_ui.dart' if (dart.library.html) 'real_ui.dart' as ui_instance;

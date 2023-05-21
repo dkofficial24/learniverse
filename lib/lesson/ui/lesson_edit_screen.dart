@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
-import 'package:learniverse/core/universal_ui.dart';
+import 'package:learniverse/core/editor/universal_ui.dart';
 import 'package:learniverse/lesson/model/lesson.model.dart';
 import 'package:learniverse/lesson/ui/lesson_preview.dart';
 import 'package:path/path.dart';

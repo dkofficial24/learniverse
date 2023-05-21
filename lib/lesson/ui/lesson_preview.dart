@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill ;
 import 'package:learniverse/lesson/model/lesson.model.dart';
-import 'package:learniverse/lesson/ui/lesson_edit_screen.dart';
+
 
 class LessonPreview extends StatelessWidget {
   final Lesson lesson;
 
-  LessonPreview({required this.lesson});
+  const LessonPreview({required this.lesson});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Lesson Preview')),
+      appBar: AppBar(title: const Text('Lesson Preview')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
@@ -51,13 +51,9 @@ class LessonPreview extends StatelessWidget {
                 'Image URL: ${lesson.imageUrl}',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
-              Text(
-                'Quiz duration: ${lesson.quizDurationInMinutes} minutes',
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
-                child: Text('Edit'),
+                child: const Text('Edit'),
                 onPressed: () {
 
                 },
