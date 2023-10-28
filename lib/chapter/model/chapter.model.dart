@@ -1,5 +1,3 @@
-import 'package:learniverse/lesson/model/quiz.dart';
-
 class Chapter {
   String? id;
   String? courseId;
