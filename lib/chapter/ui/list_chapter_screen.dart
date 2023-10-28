@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learniverse/chapter/provider/chapter_provider.dart';
 import 'package:learniverse/core/core.dart';
+import 'package:learniverse/util/extensions/string_extension.dart';
 import 'package:provider/provider.dart';
 
 class ListChapterScreen extends StatefulWidget {
@@ -15,8 +17,10 @@ class ListChapterScreen extends StatefulWidget {
 class _ListChapterScreenState extends State<ListChapterScreen> {
   @override
   void initState() {
-    Provider.of<ChapterProvider>(context, listen: false)
-        .subscribeChapterEvents(widget.courseId);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ChapterProvider>(context, listen: false)
+          .subscribeChapterEvents(widget.courseId);
+    });
     super.initState();
   }
 
@@ -26,7 +30,7 @@ class _ListChapterScreenState extends State<ListChapterScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             context.go(
-              RoutesName.addChapterScreen,
+              RoutesName.addChapterScreen.toPath,
               extra: widget.courseId,
             );
           },
@@ -41,7 +45,7 @@ class _ListChapterScreenState extends State<ListChapterScreen> {
                     return InkWell(
                       onTap: () {
                         context.go(
-                          RoutesName.chapterScreen,
+                          RoutesName.chapterScreen.toPath,
                           extra: provider.chapterList[index],
                         );
                       },

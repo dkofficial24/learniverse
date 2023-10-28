@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:learniverse/core/core.dart';
 import 'package:learniverse/course/provider/course_provider.dart';
 import 'package:learniverse/course/model/course.model.dart';
+import 'package:learniverse/util/extensions/string_extension.dart';
 import 'package:provider/provider.dart';
 
 class ListCourseScreen extends StatefulWidget {
@@ -14,17 +15,21 @@ class ListCourseScreen extends StatefulWidget {
 }
 
 class _ListCourseScreenState extends State<ListCourseScreen> {
+  late CourseProvider provider;
+
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<CourseProvider>(context, listen: false).fetchAllCourses();
+      provider = Provider.of<CourseProvider>(context, listen: false);
+      provider.fetchAllCourses();
     });
     super.initState();
   }
 
   @override
   void dispose() {
-    Provider.of<CourseProvider>(context, listen: false).dispose();
+    //todo
+    provider.dispose();
     super.dispose();
   }
 
@@ -34,9 +39,7 @@ class _ListCourseScreenState extends State<ListCourseScreen> {
       return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            context.go(RoutesName.addCourseScreen);
-
-            //Navigator.pushNamed(context, RoutesName.addCourseScreen);
+            context.go(RoutesName.addCourseScreen.toPath);
           },
           child: const Icon(Icons.add),
         ),
@@ -79,7 +82,7 @@ class _ListCourseScreenState extends State<ListCourseScreen> {
                     return InkWell(
                       onTap: () {
                         context.go(
-                          RoutesName.listChapterScreen,
+                          RoutesName.listChapterScreen.toPath,
                           extra: course.id,
                         );
                       },
