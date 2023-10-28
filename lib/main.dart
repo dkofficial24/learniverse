@@ -11,8 +11,8 @@ Future<void> main() async {
   );
   DI.init();
   runApp(MultiProvider(
-      child: const MyApp(),
-  providers: initProviders,
+    child: const MyApp(),
+    providers: initProviders,
   ));
 }
 
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Learniverse',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
