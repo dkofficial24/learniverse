@@ -41,13 +41,12 @@ class CourseProvider extends ChangeNotifier {
         DataSnapshot snapshot = event.snapshot;
 
         if (snapshot.exists) {
-          updateCourseList(snapshot.value as Map);
+          updateCourseList(Map<String, dynamic>.from(snapshot.value as Map));
         } else {
           throw 'Course does not exist';
         }
       });
     } catch (e) {
-      // Handle errors
       setErrorState(e.toString());
     } finally {
       setLoadingState(false);
@@ -64,10 +63,14 @@ class CourseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateCourseList(Map data) {
+  void updateCourseList(Map<String, dynamic> data) {
     List<Course> courses = [];
     data.forEach((key, value) {
-      courses.add(Course.fromJson(value));
+      courses.add(
+        Course.fromJson(
+          Map<String, dynamic>.from(value as Map),
+        ),
+      );
     });
     courseList = courses;
     notifyListeners();

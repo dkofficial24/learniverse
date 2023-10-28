@@ -4,7 +4,6 @@ import 'package:learniverse/chapter/service/firebase_chapter_service.dart';
 import 'package:learniverse/chapter/model/chapter.model.dart';
 import 'package:learniverse/core/core.dart';
 
-
 class ChapterProvider extends ChangeNotifier {
   ChapterProvider(this.chapterService);
 
@@ -27,10 +26,11 @@ class ChapterProvider extends ChangeNotifier {
 
   void subscribeChapterEvents(String courseId) {
     try {
-      chapterList.clear();//todo fix it
+      chapterList.clear(); //todo fix it
       _setLoadingState(true);
       chapterService.getAllChapters(courseId).listen((event) {
         DataSnapshot snapshot = event.snapshot;
+        if(!snapshot.exists)return;
         updateChapterList(snapshot.value as Map);
       });
     } catch (e) {
@@ -42,7 +42,8 @@ class ChapterProvider extends ChangeNotifier {
   void updateChapterList(Map data) {
     List<Chapter> chapterList = [];
     data.forEach((key, value) {
-      chapterList.add(Chapter.fromJson(value));
+      chapterList
+          .add(Chapter.fromJson(Map<String, dynamic>.from(value as Map)));
     });
     this.chapterList = chapterList;
     notifyListeners();
