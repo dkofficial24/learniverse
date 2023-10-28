@@ -1,5 +1,3 @@
-import 'package:learniverse/chapter/model/chapter.model.dart';
-
 class Course {
   String? id;
   String name;
