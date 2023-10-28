@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:learniverse/core/core.dart';
 import 'package:learniverse/course/service/course_firebase_service.dart';
-import 'package:learniverse/lesson/model/course.model.dart';
+import 'package:learniverse/course/model/course.model.dart';
 
 class CourseProvider extends ChangeNotifier {
   CourseProvider(this.courseFirebaseService);

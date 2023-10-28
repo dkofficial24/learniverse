@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learniverse/course/provider/course_provider.dart';
-import 'package:learniverse/lesson/model/course.model.dart';
+import 'package:learniverse/course/model/course.model.dart';
 import 'package:provider/provider.dart';
 
 class AddCourseScreen extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learniverse/core/core.dart';
 import 'package:learniverse/course/provider/course_provider.dart';
-import 'package:learniverse/lesson/model/course.model.dart';
+import 'package:learniverse/course/model/course.model.dart';
 import 'package:provider/provider.dart';
 
 class ListCourseScreen extends StatefulWidget {

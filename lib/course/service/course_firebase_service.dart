@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:learniverse/core/core.dart';
-import 'package:learniverse/lesson/model/course.model.dart';
+import 'package:learniverse/course/model/course.model.dart';
 
 class CourseFirebaseService {
   Future<void> addCourse(Course course) async {
