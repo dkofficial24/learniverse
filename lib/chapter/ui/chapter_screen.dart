@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:go_router/go_router.dart';
 import 'package:learniverse/chapter/model/chapter.model.dart';
+import 'package:learniverse/core/core.dart';
+import 'package:learniverse/util/extensions/string_extension.dart';
 
 class ChapterScreen extends StatefulWidget {
   const ChapterScreen({Key? key, required this.chapter}) : super(key: key);
@@ -27,8 +30,23 @@ class _ChapterScreenState extends State<ChapterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.go(
+                  RoutesName.quizScreen.toPath,
+                  extra: widget.chapter.id,
+                );
+              },
+              icon: const Icon(
+                Icons.quiz,
+              ))
+        ],
+      ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(vertical: 16,horizontal: MediaQuery.of(context).size.width*0.2),
+        padding: EdgeInsets.symmetric(
+            vertical: 16, horizontal: MediaQuery.of(context).size.width * 0.2),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
