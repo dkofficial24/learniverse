@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "550240836366",
+    "firebase_url": "https://learniverse-1a7e5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "learniverse-1a7e5",
+    "storage_bucket": "learniverse-1a7e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550240836366:android:bc2a2f097d853dd1a0955f",
+        "android_client_info": {
+          "package_name": "com.example.learniverse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_MXD5LIIZCXBihi2Hh6Dv9E0wLXmY3bM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
