@@ -2,30 +2,42 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:go_router/go_router.dart';
+import 'package:learniverse/chapter/model/add_update_chapter_param.dart';
 import 'package:learniverse/chapter/model/chapter.model.dart';
 import 'package:learniverse/chapter/provider/chapter_provider.dart';
 import 'package:provider/provider.dart';
 
-class AddChapterScreen extends StatefulWidget {
-  const AddChapterScreen({
+class AddEditChapterScreen extends StatefulWidget {
+  AddEditChapterScreen({
     Key? key,
-    required this.courseId,
+    required this.addEditChapterParam,
   }) : super(key: key);
-  final String courseId;
+  AddEditChapterParam addEditChapterParam;
 
   @override
-  _AddChapterScreenState createState() => _AddChapterScreenState();
+  _AddEditChapterScreenState createState() => _AddEditChapterScreenState();
 }
 
-QuillController _controller = QuillController.basic();
-
-class _AddChapterScreenState extends State<AddChapterScreen> {
+class _AddEditChapterScreenState extends State<AddEditChapterScreen> {
   late TextEditingController _titleController;
+  final QuillController _controller = QuillController.basic();
+  bool isEditMode = false;
 
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController();
+    init();
+  }
+
+  void init() {
+    if (widget.addEditChapterParam.chapter != null) {
+      isEditMode = true;
+      Chapter chapter = widget.addEditChapterParam.chapter!;
+      _titleController.text = chapter.title;
+      _controller.document = Document.fromJson(jsonDecode(chapter.content));
+    }
   }
 
   // Function to create a TextFormField with an outlined border
@@ -46,7 +58,7 @@ class _AddChapterScreenState extends State<AddChapterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Chapter'),
+        title: Text(isEditMode ? 'Edit Chapter' : 'Add Chapter'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -57,24 +69,42 @@ class _AddChapterScreenState extends State<AddChapterScreen> {
             const SizedBox(height: 16.0),
             Expanded(child: quillEditor()),
             const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                // Create a Chapter instance with the entered values
-                Chapter chapter = Chapter(
-                    courseId: widget.courseId,
-                    title: _titleController.text,
-                    content:
-                        jsonEncode(_controller.document.toDelta().toJson()));
-
-                Provider.of<ChapterProvider>(context, listen: false)
-                    .addChapter(chapter);
-              },
-              child: const Text('Add Chapter'),
-            ),
+            isEditMode ? editButton(context) : addButton(context),
           ],
         ),
       ),
     );
+  }
+
+  ElevatedButton addButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        Chapter chapter = Chapter(
+            courseId: widget.addEditChapterParam.courseId,
+            title: _titleController.text,
+            content: jsonEncode(_controller.document.toDelta().toJson()));
+
+        await Provider.of<ChapterProvider>(context, listen: false)
+            .addChapter(chapter);
+        context.pop();
+      },
+      child: const Text('Add Chapter'),
+    );
+  }
+
+  ElevatedButton editButton(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () async {
+          Chapter chapter = Chapter(
+              id: widget.addEditChapterParam.chapter?.id,
+              courseId: widget.addEditChapterParam.courseId,
+              title: _titleController.text,
+              content: jsonEncode(_controller.document.toDelta().toJson()));
+          await Provider.of<ChapterProvider>(context, listen: false)
+              .editChapter(chapter);
+          context.pop();
+        },
+        child: const Text('Update Chapter'));
   }
 
   @override

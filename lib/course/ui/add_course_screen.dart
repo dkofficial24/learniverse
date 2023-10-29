@@ -60,11 +60,13 @@ class AddCourseScreen extends StatelessWidget {
   }
 
   void addCourse(BuildContext context) async {
-    Provider.of<CourseProvider>(context,listen: false).addCourse(Course(
-      name: nameController.text,
-      description: descriptionController.text,
-      imageUrl: imageController.text,
-    ),);
+    Provider.of<CourseProvider>(context, listen: false).addCourse(
+      Course(
+        name: nameController.text,
+        description: descriptionController.text,
+        imageUrl: imageController.text,
+      ),
+    );
   }
 
   void clearFields() {

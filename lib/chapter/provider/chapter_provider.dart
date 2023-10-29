@@ -24,6 +24,17 @@ class ChapterProvider extends ChangeNotifier {
     _setLoadingState(false);
   }
 
+  Future editChapter(Chapter chapter) async {
+    try {
+      _setLoadingState(true);
+      await chapterService.editChapter(chapter);
+      AppUtils.showToast(msg: 'Chapter updated successfully');
+    } catch (e) {
+      _setErrorState(e.toString());
+    }
+    _setLoadingState(false);
+  }
+
   void subscribeChapterEvents(String courseId) {
     try {
       chapterList.clear(); //todo fix it

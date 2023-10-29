@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
+import 'package:learniverse/chapter/model/add_update_chapter_param.dart';
 import 'package:learniverse/chapter/model/chapter.model.dart';
-import 'package:learniverse/chapter/ui/add_chapter_screen.dart';
+import 'package:learniverse/chapter/ui/add_edit_chapter_screen.dart';
 import 'package:learniverse/chapter/ui/chapter_screen.dart';
 import 'package:learniverse/chapter/ui/list_chapter_screen.dart';
 import 'package:learniverse/core/core.dart';
@@ -29,10 +30,12 @@ final _router = GoRouter(
             ),
           ),
           GoRoute(
-            path: RoutesName.addChapterScreen,
-            builder: (context, state) => AddChapterScreen(
-              courseId: state.extra as String,
-            ),
+            path: RoutesName.addEditChapterScreen,
+            builder: (context, state) {
+              return AddEditChapterScreen(
+                addEditChapterParam: state.extra as AddEditChapterParam,
+              );
+            },
           ),
           GoRoute(
             path: RoutesName.chapterScreen,

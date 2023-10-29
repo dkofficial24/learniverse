@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
+import 'package:learniverse/chapter/model/add_update_chapter_param.dart';
 import 'package:learniverse/chapter/provider/chapter_provider.dart';
 import 'package:learniverse/core/core.dart';
 import 'package:learniverse/util/extensions/string_extension.dart';
@@ -29,10 +30,10 @@ class _ListChapterScreenState extends State<ListChapterScreen> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            context.go(
-              RoutesName.addChapterScreen.toPath,
-              extra: widget.courseId,
-            );
+            context.go(RoutesName.addEditChapterScreen.toPath,
+                extra: AddEditChapterParam(
+                  courseId: widget.courseId,
+                ));
           },
           child: const Icon(Icons.add),
         ),
@@ -49,8 +50,26 @@ class _ListChapterScreenState extends State<ListChapterScreen> {
                           extra: provider.chapterList[index],
                         );
                       },
-                      child: Text(
-                        provider.chapterList[index].title,
+                      child: ListTile(
+                        title: Text(
+                          provider.chapterList[index].title,
+                          textAlign: TextAlign.center,
+                        ),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
+                        leading: IconButton(
+                          onPressed: () {
+                            context.go(
+                              RoutesName.addEditChapterScreen.toPath,
+                              extra: AddEditChapterParam(
+                                courseId: widget.courseId,
+                                chapter: provider.chapterList[index],
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.edit,
+                          ),
+                        ),
                       ),
                     );
                   },
