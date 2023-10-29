@@ -6,5 +6,5 @@ class RoutesName {
   static const String addEditChapterScreen = 'AddEditChapterScreen';
   static const String chapterScreen = 'ChapterScreen';
   static const String quizScreen = 'QuizScreen';
-  static const String addQuizScreen = 'AddQuizScreen';
+  static const String addEditQuizScreen = 'AddEditQuizScreen';
 }

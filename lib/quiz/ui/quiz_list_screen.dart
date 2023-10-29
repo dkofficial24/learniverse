@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learniverse/core/core.dart';
+import 'package:learniverse/quiz/model/add_edit_args.dart';
 import 'package:learniverse/quiz/provider/quiz_provider.dart';
 import 'package:learniverse/quiz/ui/widget/question_widget.dart';
 import 'package:learniverse/util/extensions/string_extension.dart';
@@ -38,8 +39,8 @@ class _QuizListScreenState extends State<QuizListScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.go(
-            RoutesName.addQuizScreen.toPath,
-            extra: widget.chapterId,
+            RoutesName.addEditQuizScreen.toPath,
+            extra: AddEditArgs(chapterId: widget.chapterId),
           );
         },
         child: const Icon(
@@ -54,6 +55,7 @@ class _QuizListScreenState extends State<QuizListScreen> {
                 itemCount: provider.quizQuestions.length,
                 itemBuilder: (context, index) {
                   return QuestionWidget(
+                    chapterId: widget.chapterId,
                     quizQuestion: provider.quizQuestions[index],
                   );
                 }),

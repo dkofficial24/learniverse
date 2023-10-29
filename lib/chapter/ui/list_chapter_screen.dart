@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:learniverse/chapter/model/add_update_chapter_param.dart';
+import 'package:learniverse/chapter/model/chapter.model.dart';
 import 'package:learniverse/chapter/provider/chapter_provider.dart';
 import 'package:learniverse/core/core.dart';
 import 'package:learniverse/util/extensions/string_extension.dart';
+import 'package:learniverse/util/widget/app_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 class ListChapterScreen extends StatefulWidget {
@@ -56,19 +58,35 @@ class _ListChapterScreenState extends State<ListChapterScreen> {
                           textAlign: TextAlign.center,
                         ),
                         trailing: const Icon(Icons.keyboard_arrow_right),
-                        leading: IconButton(
-                          onPressed: () {
-                            context.go(
-                              RoutesName.addEditChapterScreen.toPath,
-                              extra: AddEditChapterParam(
-                                courseId: widget.courseId,
-                                chapter: provider.chapterList[index],
+                        leading: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                context.go(
+                                  RoutesName.addEditChapterScreen.toPath,
+                                  extra: AddEditChapterParam(
+                                    courseId: widget.courseId,
+                                    chapter: provider.chapterList[index],
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.edit,
                               ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.edit,
-                          ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDeleteDialog(
+                                  provider.chapterList[index],
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );
@@ -80,5 +98,25 @@ class _ListChapterScreenState extends State<ListChapterScreen> {
                 );
               },
             )));
+  }
+
+  void showDeleteDialog(Chapter chapter) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AppAlertDialog(
+            title: 'Delete alert?',
+            content: 'Do you want to delete it?',
+            callback: () {
+              deleteChapter(context, chapter);
+            },
+          );
+        });
+  }
+
+  Future<void> deleteChapter(BuildContext context, Chapter chapter) async {
+    await Provider.of<ChapterProvider>(context, listen: false).deleteChapter(
+      chapter,
+    );
   }
 }

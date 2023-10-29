@@ -40,7 +40,6 @@ class _AddEditChapterScreenState extends State<AddEditChapterScreen> {
     }
   }
 
-  // Function to create a TextFormField with an outlined border
   Widget _buildTextField(String labelText, TextEditingController controller,
       {int? maxLines, TextInputType? keyboardType}) {
     return TextFormField(

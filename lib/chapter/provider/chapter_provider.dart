@@ -35,13 +35,24 @@ class ChapterProvider extends ChangeNotifier {
     _setLoadingState(false);
   }
 
+  Future deleteChapter(Chapter chapter) async {
+    try {
+      _setLoadingState(true);
+      await chapterService.deleteChapter(chapter);
+      AppUtils.showToast(msg: 'Chapter deleted successfully');
+    } catch (e) {
+      _setErrorState(e.toString());
+    }
+    _setLoadingState(false);
+  }
+
   void subscribeChapterEvents(String courseId) {
     try {
       chapterList.clear(); //todo fix it
       _setLoadingState(true);
       chapterService.getAllChapters(courseId).listen((event) {
         DataSnapshot snapshot = event.snapshot;
-        if(!snapshot.exists)return;
+        if (!snapshot.exists) return;
         updateChapterList(snapshot.value as Map);
       });
     } catch (e) {

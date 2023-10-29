@@ -7,7 +7,8 @@ import 'package:learniverse/chapter/ui/list_chapter_screen.dart';
 import 'package:learniverse/core/core.dart';
 import 'package:learniverse/course/ui/add_course_screen.dart';
 import 'package:learniverse/course/ui/list_course_screen.dart';
-import 'package:learniverse/quiz/ui/add_quiz_screen.dart';
+import 'package:learniverse/quiz/model/add_edit_args.dart';
+import 'package:learniverse/quiz/ui/add_edit_quiz_screen.dart';
 import 'package:learniverse/quiz/ui/quiz_list_screen.dart';
 
 GoRouter getRouter() => _router;
@@ -50,9 +51,9 @@ final _router = GoRouter(
             ),
           ),
           GoRoute(
-            path: RoutesName.addQuizScreen,
-            builder: (context, state) => AddQuizScreen(
-              chapterId: state.extra as String,
+            path: RoutesName.addEditQuizScreen,
+            builder: (context, state) => AddEditQuizScreen(
+              addEditArgs: state.extra as AddEditArgs,
             ),
           ),
         ]),

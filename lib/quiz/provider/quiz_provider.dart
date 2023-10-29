@@ -26,6 +26,41 @@ class QuizProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future editQuizQuestion(String chapterId, QuizQuestion question) async {
+    try {
+      isLoading = true;
+      error = null;
+      notifyListeners();
+      await firebaseQuizService.editQuiz(
+          chapterId: chapterId, quizQuestion: question);
+      AppUtils.showToast(msg: 'Question updated successfully');
+    } catch (e) {
+      error = e.toString();
+    }
+    isLoading = true;
+    notifyListeners();
+  }
+
+  Future deleteQuizQuestion({
+    required String chapterId,
+    required String questionId,
+  }) async {
+    try {
+      isLoading = true;
+      error = null;
+      notifyListeners();
+      await firebaseQuizService.deleteQuiz(
+        chapterId: chapterId,
+        questionId: questionId,
+      );
+      AppUtils.showToast(msg: 'Question delete successfully');
+    } catch (e) {
+      error = e.toString();
+    }
+    isLoading = true;
+    notifyListeners();
+  }
+
   Future loadQuizQuestions(String chapterId) async {
     try {
       quizQuestions.clear();

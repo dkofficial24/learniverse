@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:learniverse/quiz/model/add_edit_args.dart';
 import 'package:learniverse/quiz/model/quiz_model.dart';
 import 'package:learniverse/quiz/provider/quiz_provider.dart';
+import 'package:learniverse/util/widget/app_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
-class AddQuizScreen extends StatefulWidget {
-  const AddQuizScreen({
+class AddEditQuizScreen extends StatefulWidget {
+  const AddEditQuizScreen({
     super.key,
-    required this.chapterId,
+    required this.addEditArgs,
   });
 
-  final String chapterId;
+  final AddEditArgs addEditArgs;
 
   @override
-  State<AddQuizScreen> createState() => _AddQuizScreenState();
+  State<AddEditQuizScreen> createState() => _AddEditQuizScreenState();
 }
 
-class _AddQuizScreenState extends State<AddQuizScreen> {
+class _AddEditQuizScreenState extends State<AddEditQuizScreen> {
   int? selectedRadio;
 
   final TextEditingController questionController = TextEditingController();
@@ -25,6 +27,23 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   final TextEditingController option4Controller = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+  bool isEditMode = false;
+
+  @override
+  void initState() {
+    if (widget.addEditArgs.question != null) {
+      QuizQuestion question = widget.addEditArgs.question!;
+      isEditMode = true;
+      questionController.text = question.question;
+      option1Controller.text = question.options[0];
+      option2Controller.text = question.options[1];
+      option3Controller.text = question.options[2];
+      option4Controller.text = question.options[3];
+      selectedRadio = question.correctOptionIndex;
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,24 +151,50 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         resetFields();
                       },
                       child: const Text('Reset')),
-                  ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState?.validate() ?? false) {
-                          QuizQuestion question = QuizQuestion(
-                              question: questionController.text,
-                              options: [
-                                option1Controller.text,
-                                option2Controller.text,
-                                option3Controller.text,
-                                option4Controller.text,
-                              ],
-                              correctOptionIndex: selectedRadio!);
+                  isEditMode
+                      ? ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState?.validate() ?? false) {
+                              QuizQuestion question = QuizQuestion(
+                                  id: widget.addEditArgs.question?.id!,
+                                  question: questionController.text,
+                                  options: [
+                                    option1Controller.text,
+                                    option2Controller.text,
+                                    option3Controller.text,
+                                    option4Controller.text,
+                                  ],
+                                  correctOptionIndex: selectedRadio!);
 
-                          Provider.of<QuizProvider>(context, listen: false)
-                              .addQuizQuestion(widget.chapterId, question);
-                        }
-                      },
-                      child: const Text('Add')),
+                              Provider.of<QuizProvider>(context, listen: false)
+                                  .editQuizQuestion(
+                                widget.addEditArgs.chapterId,
+                                question,
+                              );
+                            }
+                          },
+                          child: const Text('Update'))
+                      : ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState?.validate() ?? false) {
+                              QuizQuestion question = QuizQuestion(
+                                  question: questionController.text,
+                                  options: [
+                                    option1Controller.text,
+                                    option2Controller.text,
+                                    option3Controller.text,
+                                    option4Controller.text,
+                                  ],
+                                  correctOptionIndex: selectedRadio!);
+
+                              Provider.of<QuizProvider>(context, listen: false)
+                                  .addQuizQuestion(
+                                widget.addEditArgs.chapterId,
+                                question,
+                              );
+                            }
+                          },
+                          child: const Text('Add')),
                 ],
               )
             ],
